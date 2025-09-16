@@ -1,0 +1,56 @@
+import { UserProps } from "@/interfaces";
+
+interface UserCardProps {
+  user: UserProps;
+}
+
+const UserCard: React.FC<UserCardProps> = ({ user }) => {
+  return (
+    <div className="bg-white shadow-md rounded-xl p-6 border border-gray-200 hover:shadow-lg transition">
+      {/* Header */}
+      <h2 className="text-xl font-bold text-gray-800">{user.name}</h2>
+      <p className="text-sm text-gray-500">@{user.username}</p>
+
+      {/* Contact Info */}
+      <div className="mt-3 text-gray-700 space-y-1">
+        <p>
+          <span className="font-semibold">Email:</span> {user.email}
+        </p>
+        <p>
+          <span className="font-semibold">Phone:</span> {user.phone}
+        </p>
+        <p>
+          <span className="font-semibold">Website:</span>{" "}
+          <a
+            href={`https://${user.website}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            {user.website}
+          </a>
+        </p>
+      </div>
+
+      {/* Address */}
+      <div className="mt-3">
+        <h3 className="text-sm font-semibold text-gray-600">Address</h3>
+        <p className="text-gray-500 text-sm">
+          {user.address.suite}, {user.address.street}, {user.address.city},{" "}
+          {user.address.zipcode}
+        </p>
+      </div>
+
+      {/* Company */}
+      <div className="mt-3">
+        <h3 className="text-sm font-semibold text-gray-600">Company</h3>
+        <p className="text-gray-700">{user.company.name}</p>
+        <p className="text-gray-500 italic text-sm">
+          “{user.company.catchPhrase}”
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default UserCard;
