@@ -1,38 +1,43 @@
+import React, { useState } from "react";
+import Header from "@/components/layout/Header";
 import UserCard from "@/components/common/UserCard";
-import { UserProps } from "@/interfaces";
+import UserModal from "@/components/common/UserModal";
+import { UserData } from "@/interfaces";
 
-const posts: UserProps[] = [
-  {
-    id: 1,
-    name: "Musa Ogunsolu",
-    username: "Musakalamz",
-    email: "musakalamz@example.com",
-    address: {
-      street: "Kulas Light",
-      suite: "Apt. 556",
-      city: "Abeokuts",
-      zipcode: "1010111",
-      geo: {
-        lat: "-37.3159",
-        lng: "81.1496",
-      },
-    },
-    phone: "1-770-736-8031 x56442",
-    website: "musakalamz.org",
-    company: {
-      name: "MS International",
-      catchPhrase: "Multi-layered client-server neural-net",
-      bs: "harness real-time e-markets",
-    },
-  },
-];
+const Users: React.FC<{ posts: UserData[] }> = ({ posts }) => {
+  const [users, setUsers] = useState<UserData[]>(posts);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const Users: React.FC = () => {
+  const handleAddUser = (user: UserData) => {
+    setUsers((prev) => [user, ...prev]);
+  };
+
   return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+    <div className="flex flex-col h-screen">
+      <Header />
+      <main className="p-4">
+        <div className="flex justify-between mb-4">
+          <h1 className="text-2xl font-semibold">Users</h1>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-blue-700 px-4 py-2 rounded-full text-white"
+          >
+            Add User
+          </button>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4">
+          {users.map((user) => (
+            <UserCard key={user.id} {...user} />
+          ))}
+        </div>
+      </main>
+
+      <UserModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddUser}
+      />
     </div>
   );
 };
