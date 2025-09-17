@@ -38,6 +38,12 @@ const Users: React.FC<{ posts: UserData[] }> = ({ posts }) => {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddUser}
       />
+
+      <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
+      </div>
     </div>
   );
 };
